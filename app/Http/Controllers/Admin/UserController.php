@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreUserRequest;
-use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -17,7 +15,6 @@ class UserController extends Controller
     {
         $query = User::with('roles');
 
-        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -27,12 +24,10 @@ class UserController extends Controller
             });
         }
 
-        // Filter by role
         if ($request->filled('role')) {
             $query->role($request->role);
         }
 
-        // Filter by status
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
         }
@@ -49,20 +44,30 @@ class UserController extends Controller
         return view('admin.users.create', compact('roles'));
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'exists:roles,name'],
+            'student_id' => ['nullable', 'string', 'max:50', 'unique:users'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'department' => ['nullable', 'string', 'max:100'],
+        ]);
+
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'student_id' => $request->student_id,
-            'phone' => $request->phone,
-            'department' => $request->department,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'student_id' => $validated['student_id'] ?? null,
+            'phone' => $validated['phone'] ?? null,
+            'department' => $validated['department'] ?? null,
             'is_active' => true,
             'email_verified_at' => now(),
         ]);
 
-        $user->assignRole($request->role);
+        $user->assignRole($validated['role']);
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User created successfully.');
@@ -70,7 +75,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        $user->load(['roles', 'applications.internship.company', 'placements.internship.company']);
+        $user->load('roles', 'applications.internship.company', 'placements.internship.company');
         return view('admin.users.show', compact('user'));
     }
 
@@ -80,20 +85,26 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'student_id' => $request->student_id,
-            'phone' => $request->phone,
-            'department' => $request->department,
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'role' => ['required', 'exists:roles,name'],
+            'student_id' => ['nullable', 'string', 'max:50', 'unique:users,student_id,' . $user->id],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'department' => ['nullable', 'string', 'max:100'],
         ]);
 
-        // Update role if changed
-        if ($request->role && !$user->hasRole($request->role)) {
-            $user->syncRoles([$request->role]);
-        }
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'student_id' => $validated['student_id'] ?? null,
+            'phone' => $validated['phone'] ?? null,
+            'department' => $validated['department'] ?? null,
+        ]);
+
+        $user->syncRoles([$validated['role']]);
 
         return redirect()->route('admin.users.index')
             ->with('success', 'User updated successfully.');
@@ -101,7 +112,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        // Prevent deleting yourself
         if ($user->id === auth()->id()) {
             return back()->with('error', 'You cannot delete your own account.');
         }
@@ -114,7 +124,6 @@ class UserController extends Controller
 
     public function toggleStatus(User $user)
     {
-        // Prevent deactivating yourself
         if ($user->id === auth()->id()) {
             return back()->with('error', 'You cannot deactivate your own account.');
         }
@@ -127,12 +136,8 @@ class UserController extends Controller
 
     public function resetPassword(User $user)
     {
-        $newPassword = Str::random(10);
-        $user->update(['password' => Hash::make($newPassword)]);
+        $user->update(['password' => Hash::make('password')]);
 
-        // In production, you would send an email here
-        // Mail::to($user)->send(new PasswordResetMail($newPassword));
-
-        return back()->with('success', "Password reset successfully. New password: {$newPassword}");
+        return back()->with('success', 'Password reset to default (password).');
     }
 }

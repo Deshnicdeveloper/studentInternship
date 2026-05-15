@@ -6,28 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('placements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('application_id')->constrained()->onDelete('cascade');
-            $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('internship_id')->constrained()->onDelete('cascade');
-            $table->foreignId('supervisor_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('coordinator_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('internship_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('supervisor_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('coordinator_id')->nullable()->constrained('users')->nullOnDelete();
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['active', 'completed', 'terminated'])->default('active');
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('placements');

@@ -4,13 +4,12 @@
     <div class="space-y-6">
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            <!-- Total Students -->
             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-100">
                             <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" />
                             </svg>
                         </div>
                     </div>
@@ -21,13 +20,12 @@
                 </div>
             </div>
 
-            <!-- Total Companies -->
             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
                             <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21" />
                             </svg>
                         </div>
                     </div>
@@ -38,13 +36,12 @@
                 </div>
             </div>
 
-            <!-- Total Internships -->
             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100">
                             <svg class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" />
                             </svg>
                         </div>
                     </div>
@@ -55,7 +52,6 @@
                 </div>
             </div>
 
-            <!-- Active Placements -->
             <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -73,66 +69,6 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <!-- Recent Applications -->
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-                <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
-                    <div>
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">Recent Applications</h3>
-                        <p class="mt-1 text-sm text-gray-500">Latest 10 internship applications.</p>
-                    </div>
-                    <a href="{{ route('admin.users.index', ['role' => 'student']) }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">View all</a>
-                </div>
-                <div class="border-t border-gray-200">
-                    @if($recentApplications->isEmpty())
-                        <div class="px-4 py-12 text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-                            </svg>
-                            <h3 class="mt-2 text-sm font-semibold text-gray-900">No applications yet</h3>
-                            <p class="mt-1 text-sm text-gray-500">Applications will appear here once students start applying.</p>
-                        </div>
-                    @else
-                        <ul role="list" class="divide-y divide-gray-200">
-                            @foreach($recentApplications as $application)
-                                <li class="px-4 py-4">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center min-w-0">
-                                            <img class="h-10 w-10 rounded-full" src="{{ $application->student->profile_photo_url }}" alt="">
-                                            <div class="ml-4 truncate">
-                                                <p class="truncate text-sm font-medium text-gray-900">{{ $application->student->name }}</p>
-                                                <p class="truncate text-sm text-gray-500">{{ $application->internship->title }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="ml-4 flex-shrink-0">
-                                            @if($application->status === 'pending')
-                                                <span class="inline-flex rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-800">Pending</span>
-                                            @elseif($application->status === 'approved')
-                                                <span class="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Approved</span>
-                                            @else
-                                                <span class="inline-flex rounded-full bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">Rejected</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Applications Chart -->
-            <div class="overflow-hidden rounded-lg bg-white shadow">
-                <div class="px-4 py-5 sm:px-6">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">Applications per Month</h3>
-                    <p class="mt-1 text-sm text-gray-500">Monthly application statistics for the last 6 months.</p>
-                </div>
-                <div class="border-t border-gray-200 p-6">
-                    <canvas id="applicationsChart" height="200"></canvas>
-                </div>
-            </div>
-        </div>
-
         <!-- Quick Links -->
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <a href="{{ route('admin.users.create') }}" class="relative block rounded-lg border border-gray-300 bg-white p-6 shadow-sm hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500">
@@ -144,7 +80,6 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-900">Add New User</p>
-                        <p class="text-sm text-gray-500">Create a new user account</p>
                     </div>
                 </div>
             </a>
@@ -158,7 +93,6 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-900">Add Company</p>
-                        <p class="text-sm text-gray-500">Register a new company</p>
                     </div>
                 </div>
             </a>
@@ -172,7 +106,6 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-900">Add Internship</p>
-                        <p class="text-sm text-gray-500">Create a new internship</p>
                     </div>
                 </div>
             </a>
@@ -187,54 +120,52 @@
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-900">Settings</p>
-                        <p class="text-sm text-gray-500">Configure system settings</p>
                     </div>
                 </div>
             </a>
         </div>
+
+        <!-- Recent Applications -->
+        <div class="overflow-hidden rounded-lg bg-white shadow">
+            <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Recent Applications</h3>
+                    <p class="mt-1 text-sm text-gray-500">Latest internship applications.</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-200">
+                @if($recentApplications->isEmpty())
+                    <div class="px-4 py-12 text-center">
+                        <h3 class="mt-2 text-sm font-semibold text-gray-900">No applications yet</h3>
+                        <p class="mt-1 text-sm text-gray-500">Applications will appear here once students start applying.</p>
+                    </div>
+                @else
+                    <ul role="list" class="divide-y divide-gray-200">
+                        @foreach($recentApplications as $application)
+                            <li class="px-4 py-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center min-w-0">
+                                        <img class="h-10 w-10 rounded-full" src="{{ $application->student->profile_photo_url }}" alt="">
+                                        <div class="ml-4 truncate">
+                                            <p class="truncate text-sm font-medium text-gray-900">{{ $application->student->name }}</p>
+                                            <p class="truncate text-sm text-gray-500">{{ $application->internship->title }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="ml-4 flex-shrink-0">
+                                        @if($application->status === 'pending')
+                                            <span class="inline-flex rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-800">Pending</span>
+                                        @elseif($application->status === 'approved')
+                                            <span class="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">Approved</span>
+                                        @else
+                                            <span class="inline-flex rounded-full bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">Rejected</span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+        </div>
     </div>
-
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('applicationsChart').getContext('2d');
-        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        const chartData = @json($applicationsPerMonth);
-        const labels = chartData.map(item => monthNames[item.month - 1] + ' ' + item.year);
-        const data = chartData.map(item => item.count);
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels.length ? labels : ['No Data'],
-                datasets: [{
-                    label: 'Applications',
-                    data: data.length ? data : [0],
-                    backgroundColor: 'rgba(79, 70, 229, 0.8)',
-                    borderColor: 'rgba(79, 70, 229, 1)',
-                    borderWidth: 1,
-                    borderRadius: 4,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-    @endpush
 </x-app-layout>
