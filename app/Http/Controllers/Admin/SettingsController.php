@@ -10,22 +10,24 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        $settings = Setting::getAllSettings();
+        $settings = Setting::pluck('value', 'key')->toArray();
+
         return view('admin.settings.index', compact('settings'));
     }
 
     public function update(Request $request)
     {
-        $request->validate([
-            'system_name' => 'required|string|max:255',
-            'contact_email' => 'required|email|max:255',
-            'academic_year' => 'required|string|max:20',
+        $validated = $request->validate([
+            'system_name' => ['required', 'string', 'max:255'],
+            'contact_email' => ['required', 'email', 'max:255'],
+            'academic_year' => ['required', 'string', 'max:20'],
         ]);
 
-        Setting::set('system_name', $request->system_name);
-        Setting::set('contact_email', $request->contact_email);
-        Setting::set('academic_year', $request->academic_year);
+        foreach ($validated as $key => $value) {
+            Setting::set($key, $value);
+        }
 
-        return back()->with('success', 'Settings updated successfully.');
+        return redirect()->route('admin.settings.index')
+            ->with('success', 'Settings updated successfully.');
     }
 }

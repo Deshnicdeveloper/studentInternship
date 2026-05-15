@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreCompanyRequest;
-use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,30 +13,21 @@ class CompanyController extends Controller
     {
         $query = Company::withCount(['internships', 'placements']);
 
-        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('industry', 'like', "%{$search}%")
-                    ->orWhere('contact_person', 'like', "%{$search}%");
+                    ->orWhere('city', 'like', "%{$search}%");
             });
         }
 
-        // Filter by status
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
         }
 
-        // Filter by industry
-        if ($request->filled('industry')) {
-            $query->where('industry', $request->industry);
-        }
+        $companies = $query->latest()->paginate(12)->withQueryString();
 
-        $companies = $query->latest()->paginate(15)->withQueryString();
-        $industries = Company::distinct()->pluck('industry')->filter();
-
-        return view('admin.companies.index', compact('companies', 'industries'));
+        return view('admin.companies.index', compact('companies'));
     }
 
     public function create()
@@ -46,15 +35,24 @@ class CompanyController extends Controller
         return view('admin.companies.create');
     }
 
-    public function store(StoreCompanyRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'address' => ['nullable', 'string'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'logo' => ['nullable', 'image', 'max:2048'],
+        ]);
 
         if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('companies/logos', 'public');
+            $validated['logo'] = $request->file('logo')->store('company-logos', 'public');
         }
 
-        Company::create($data);
+        Company::create($validated);
 
         return redirect()->route('admin.companies.index')
             ->with('success', 'Company created successfully.');
@@ -62,13 +60,9 @@ class CompanyController extends Controller
 
     public function show(Company $company)
     {
-        $company->load([
-            'internships' => function ($query) {
-                $query->withCount('placements')->latest();
-            },
-            'placements.student',
-            'placements.internship'
-        ]);
+        $company->load(['internships' => function ($q) {
+            $q->withCount(['applications', 'placements']);
+        }, 'placements.student']);
 
         return view('admin.companies.show', compact('company'));
     }
@@ -78,19 +72,27 @@ class CompanyController extends Controller
         return view('admin.companies.edit', compact('company'));
     }
 
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(Request $request, Company $company)
     {
-        $data = $request->validated();
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'address' => ['nullable', 'string'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'logo' => ['nullable', 'image', 'max:2048'],
+        ]);
 
         if ($request->hasFile('logo')) {
-            // Delete old logo
             if ($company->logo) {
                 Storage::disk('public')->delete($company->logo);
             }
-            $data['logo'] = $request->file('logo')->store('companies/logos', 'public');
+            $validated['logo'] = $request->file('logo')->store('company-logos', 'public');
         }
 
-        $company->update($data);
+        $company->update($validated);
 
         return redirect()->route('admin.companies.index')
             ->with('success', 'Company updated successfully.');
@@ -98,12 +100,10 @@ class CompanyController extends Controller
 
     public function destroy(Company $company)
     {
-        // Check if company has internships
         if ($company->internships()->exists()) {
             return back()->with('error', 'Cannot delete company with existing internships.');
         }
 
-        // Delete logo
         if ($company->logo) {
             Storage::disk('public')->delete($company->logo);
         }

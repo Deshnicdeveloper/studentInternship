@@ -6,26 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('placement_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('type'); // acceptance_letter, insurance, resume, etc.
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('placement_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('title');
+            $table->enum('type', ['resume', 'cover_letter', 'certificate', 'report', 'other'])->default('other');
             $table->string('file_path');
-            $table->string('original_name');
-            $table->timestamp('uploaded_at')->useCurrent();
+            $table->string('file_name');
+            $table->integer('file_size')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('documents');

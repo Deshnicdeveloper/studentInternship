@@ -28,33 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended($this->redirectTo());
-    }
-
-    /**
-     * Get the redirect path based on user role.
-     */
-    protected function redirectTo(): string
-    {
-        $user = Auth::user();
-
-        if ($user->hasRole('admin')) {
-            return route('admin.dashboard');
-        }
-
-        if ($user->hasRole('coordinator')) {
-            return route('coordinator.dashboard');
-        }
-
-        if ($user->hasRole('supervisor')) {
-            return route('supervisor.dashboard');
-        }
-
-        if ($user->hasRole('student')) {
-            return route('student.dashboard');
-        }
-
-        return route('dashboard');
+        return redirect()->intended(route('dashboard', absolute: false));
     }
 
     /**

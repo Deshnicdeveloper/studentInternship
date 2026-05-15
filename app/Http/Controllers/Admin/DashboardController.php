@@ -8,7 +8,6 @@ use App\Models\Company;
 use App\Models\Internship;
 use App\Models\Placement;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -27,7 +26,6 @@ class DashboardController extends Controller
             ->take(10)
             ->get();
 
-        // Get applications per month for the last 6 months
         $applicationsPerMonth = Application::select(
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('YEAR(created_at) as year'),

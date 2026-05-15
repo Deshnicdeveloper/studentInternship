@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\StoreInternshipRequest;
-use App\Http\Requests\Admin\UpdateInternshipRequest;
 use App\Models\Company;
 use App\Models\Internship;
 use Illuminate\Http\Request;
@@ -13,10 +11,8 @@ class InternshipController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Internship::with('company')
-            ->withCount(['applications', 'placements']);
+        $query = Internship::with('company')->withCount(['applications', 'placements']);
 
-        // Search
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -27,12 +23,10 @@ class InternshipController extends Controller
             });
         }
 
-        // Filter by company
         if ($request->filled('company')) {
             $query->where('company_id', $request->company);
         }
 
-        // Filter by status
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active');
         }
@@ -49,9 +43,18 @@ class InternshipController extends Controller
         return view('admin.internships.create', compact('companies'));
     }
 
-    public function store(StoreInternshipRequest $request)
+    public function store(Request $request)
     {
-        Internship::create($request->validated());
+        $validated = $request->validate([
+            'company_id' => ['required', 'exists:companies,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
+            'slots' => ['required', 'integer', 'min:1'],
+        ]);
+
+        Internship::create($validated);
 
         return redirect()->route('admin.internships.index')
             ->with('success', 'Internship created successfully.');
@@ -74,9 +77,18 @@ class InternshipController extends Controller
         return view('admin.internships.edit', compact('internship', 'companies'));
     }
 
-    public function update(UpdateInternshipRequest $request, Internship $internship)
+    public function update(Request $request, Internship $internship)
     {
-        $internship->update($request->validated());
+        $validated = $request->validate([
+            'company_id' => ['required', 'exists:companies,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date', 'after:start_date'],
+            'slots' => ['required', 'integer', 'min:1'],
+        ]);
+
+        $internship->update($validated);
 
         return redirect()->route('admin.internships.index')
             ->with('success', 'Internship updated successfully.');
@@ -84,7 +96,6 @@ class InternshipController extends Controller
 
     public function destroy(Internship $internship)
     {
-        // Check if internship has applications or placements
         if ($internship->applications()->exists() || $internship->placements()->exists()) {
             return back()->with('error', 'Cannot delete internship with existing applications or placements.');
         }
