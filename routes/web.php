@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\InternshipController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,29 +63,25 @@ Route::middleware('auth')->group(function () {
 
 // Admin routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    // Dashboard
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Users management (placeholder routes)
-    Route::get('/users', function () {
-        return view('admin.users.index');
-    })->name('users.index');
+    // Users management
+    Route::resource('users', UserController::class);
+    Route::post('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+    Route::post('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
 
-    // Companies management (placeholder routes)
-    Route::get('/companies', function () {
-        return view('admin.companies.index');
-    })->name('companies.index');
+    // Companies management
+    Route::resource('companies', CompanyController::class);
+    Route::post('/companies/{company}/toggle-status', [CompanyController::class, 'toggleStatus'])->name('companies.toggle-status');
 
-    // Internships management (placeholder routes)
-    Route::get('/internships', function () {
-        return view('admin.internships.index');
-    })->name('internships.index');
+    // Internships management
+    Route::resource('internships', InternshipController::class);
+    Route::post('/internships/{internship}/toggle-status', [InternshipController::class, 'toggleStatus'])->name('internships.toggle-status');
 
-    // Settings (placeholder routes)
-    Route::get('/settings', function () {
-        return view('admin.settings.index');
-    })->name('settings.index');
+    // Settings
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
 });
 
 // Coordinator routes
