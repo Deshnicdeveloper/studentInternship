@@ -37,6 +37,7 @@ class ApplicationRejected extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
+            'title' => 'Application Not Approved',
             'type' => 'application_rejected',
             'message' => 'Your application for ' . $this->application->internship->title . ' at ' . $this->application->internship->company->name . ' was not approved.',
             'application_id' => $this->application->id,
