@@ -140,7 +140,11 @@
                             <div class="mb-6">{{ $header }}</div>
                         @endisset
 
-                        {{ $slot }}
+                        @if(isset($slot) && !$slot->isEmpty())
+                            {{ $slot }}
+                        @else
+                            @yield('content')
+                        @endif
                     </div>
                 </main>
             </div>
