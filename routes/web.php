@@ -7,6 +7,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Role-specific base URL redirects
+// When unauthenticated users hit these URLs, they'll be redirected to login
+// When authenticated users hit these URLs, they'll be redirected to their dashboard
+Route::get('/admin', function () {
+    return redirect()->route('admin.dashboard');
+})->middleware(['auth', 'role:admin']);
+
+Route::get('/coordinator', function () {
+    return redirect()->route('coordinator.dashboard');
+})->middleware(['auth', 'role:coordinator']);
+
+Route::get('/supervisor', function () {
+    return redirect()->route('supervisor.dashboard');
+})->middleware(['auth', 'role:supervisor']);
+
+Route::get('/student', function () {
+    return redirect()->route('student.dashboard');
+})->middleware(['auth', 'role:student']);
+
 // Redirect /dashboard based on user role
 Route::get('/dashboard', function () {
     $user = auth()->user();
