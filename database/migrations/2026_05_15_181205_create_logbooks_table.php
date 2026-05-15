@@ -12,13 +12,18 @@ return new class extends Migration
             $table->id();
             $table->foreignId('placement_id')->constrained()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
-            $table->date('date');
+            $table->integer('week_number');
+            $table->date('week_start');
+            $table->date('week_end');
             $table->text('activities');
             $table->text('learnings')->nullable();
             $table->text('challenges')->nullable();
+            $table->text('next_week_plan')->nullable();
             $table->enum('status', ['draft', 'submitted', 'approved', 'rejected'])->default('draft');
-            $table->text('supervisor_remarks')->nullable();
+            $table->text('supervisor_feedback')->nullable();
             $table->timestamps();
+
+            $table->unique(['placement_id', 'week_number']);
         });
     }
 
