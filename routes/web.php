@@ -46,18 +46,61 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('settings.update');
 });
 
-// Coordinator Routes (placeholder)
+// Coordinator Routes
 Route::middleware(['auth', 'role:coordinator'])->prefix('coordinator')->name('coordinator.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('coordinator.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Coordinator\DashboardController::class, 'index'])->name('dashboard');
+
+    // Applications
+    Route::get('/applications', [App\Http\Controllers\Coordinator\ApplicationController::class, 'index'])->name('applications.index');
+    Route::get('/applications/{application}', [App\Http\Controllers\Coordinator\ApplicationController::class, 'show'])->name('applications.show');
+    Route::post('/applications/{application}/approve', [App\Http\Controllers\Coordinator\ApplicationController::class, 'approve'])->name('applications.approve');
+    Route::post('/applications/{application}/reject', [App\Http\Controllers\Coordinator\ApplicationController::class, 'reject'])->name('applications.reject');
+
+    // Placements
+    Route::get('/placements', [App\Http\Controllers\Coordinator\PlacementController::class, 'index'])->name('placements.index');
+    Route::get('/placements/{placement}', [App\Http\Controllers\Coordinator\PlacementController::class, 'show'])->name('placements.show');
+    Route::post('/placements/{placement}/complete', [App\Http\Controllers\Coordinator\PlacementController::class, 'complete'])->name('placements.complete');
+    Route::post('/placements/{placement}/terminate', [App\Http\Controllers\Coordinator\PlacementController::class, 'terminate'])->name('placements.terminate');
+
+    // Logbooks
+    Route::get('/logbooks', [App\Http\Controllers\Coordinator\LogbookController::class, 'index'])->name('logbooks.index');
+    Route::get('/logbooks/{logbook}', [App\Http\Controllers\Coordinator\LogbookController::class, 'show'])->name('logbooks.show');
+    Route::post('/logbooks/{logbook}/review', [App\Http\Controllers\Coordinator\LogbookController::class, 'review'])->name('logbooks.review');
+
+    // Evaluations
+    Route::get('/evaluations', [App\Http\Controllers\Coordinator\EvaluationController::class, 'index'])->name('evaluations.index');
+    Route::get('/evaluations/{evaluation}', [App\Http\Controllers\Coordinator\EvaluationController::class, 'show'])->name('evaluations.show');
+    Route::post('/placements/{placement}/grade', [App\Http\Controllers\Coordinator\EvaluationController::class, 'grade'])->name('placements.grade');
+
+    // Reports
+    Route::get('/reports', [App\Http\Controllers\Coordinator\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/{placement}/pdf', [App\Http\Controllers\Coordinator\ReportController::class, 'generatePdf'])->name('reports.pdf');
+    Route::get('/reports/export-csv', [App\Http\Controllers\Coordinator\ReportController::class, 'exportCsv'])->name('reports.export-csv');
 });
 
-// Supervisor Routes (placeholder)
+// Supervisor Routes
 Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->name('supervisor.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('supervisor.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Supervisor\DashboardController::class, 'index'])->name('dashboard');
+
+    // Assigned Students
+    Route::get('/students', [App\Http\Controllers\Supervisor\StudentController::class, 'index'])->name('students.index');
+    Route::get('/students/{placement}', [App\Http\Controllers\Supervisor\StudentController::class, 'show'])->name('students.show');
+
+    // Logbooks
+    Route::get('/logbooks', [App\Http\Controllers\Supervisor\LogbookController::class, 'index'])->name('logbooks.index');
+    Route::get('/logbooks/{logbook}', [App\Http\Controllers\Supervisor\LogbookController::class, 'show'])->name('logbooks.show');
+    Route::post('/logbooks/{logbook}/review', [App\Http\Controllers\Supervisor\LogbookController::class, 'review'])->name('logbooks.review');
+
+    // Evaluations
+    Route::get('/evaluations', [App\Http\Controllers\Supervisor\EvaluationController::class, 'index'])->name('evaluations.index');
+    Route::get('/evaluations/create/{placement}', [App\Http\Controllers\Supervisor\EvaluationController::class, 'create'])->name('evaluations.create');
+    Route::post('/evaluations/{placement}', [App\Http\Controllers\Supervisor\EvaluationController::class, 'store'])->name('evaluations.store');
+    Route::get('/evaluations/{evaluation}', [App\Http\Controllers\Supervisor\EvaluationController::class, 'show'])->name('evaluations.show');
+
+    // Profile
+    Route::get('/profile', [App\Http\Controllers\Supervisor\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [App\Http\Controllers\Supervisor\ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [App\Http\Controllers\Supervisor\ProfileController::class, 'updatePassword'])->name('profile.password');
 });
 
 // Student Routes
