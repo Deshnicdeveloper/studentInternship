@@ -57,6 +57,55 @@
                             <h1 class="text-lg font-semibold text-gray-900">@yield('title', 'Dashboard')</h1>
                         </div>
                         <div class="flex items-center gap-x-4 lg:gap-x-6">
+                            <!-- Notification bell -->
+                            <div class="relative" x-data="{ notifOpen: false, unreadCount: {{ auth()->user()->unreadNotifications()->count() }} }">
+                                <button type="button" class="relative p-2 text-gray-500 hover:text-gray-700" @click="notifOpen = !notifOpen">
+                                    <span class="sr-only">View notifications</span>
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                                    </svg>
+                                    <span x-show="unreadCount > 0" class="absolute top-0 right-0 h-4 w-4 text-xs flex items-center justify-center rounded-full bg-red-500 text-white font-semibold" x-text="unreadCount > 9 ? '9+' : unreadCount"></span>
+                                </button>
+
+                                <div x-show="notifOpen" @click.away="notifOpen = false" class="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" x-cloak>
+                                    <div class="py-1">
+                                        <div class="px-4 py-2 border-b border-gray-200">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm font-semibold text-gray-900">Notifications</span>
+                                                <a href="{{ route('notifications.index') }}" class="text-xs text-indigo-600 hover:text-indigo-900">View all</a>
+                                            </div>
+                                        </div>
+                                        <div class="max-h-64 overflow-y-auto">
+                                            @forelse(auth()->user()->unreadNotifications->take(5) as $notification)
+                                                <a href="{{ route('notifications.index') }}" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">
+                                                    <div class="flex items-start">
+                                                        <span class="h-2 w-2 mt-1.5 bg-indigo-600 rounded-full flex-shrink-0"></span>
+                                                        <div class="ml-3">
+                                                            <p class="text-sm font-medium text-gray-900">{{ $notification->data['title'] ?? class_basename($notification->type) }}</p>
+                                                            <p class="text-xs text-gray-500 mt-0.5">{{ $notification->created_at->diffForHumans() }}</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            @empty
+                                                <div class="px-4 py-6 text-center text-sm text-gray-500">
+                                                    No new notifications
+                                                </div>
+                                            @endforelse
+                                        </div>
+                                        @if(auth()->user()->unreadNotifications->count() > 0)
+                                            <div class="px-4 py-2 border-t border-gray-200">
+                                                <form action="{{ route('notifications.mark-all-read') }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="text-xs text-indigo-600 hover:text-indigo-900">Mark all as read</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="h-6 w-px bg-gray-200"></div>
+
                             <!-- Profile dropdown -->
                             <div class="relative" x-data="{ open: false }">
                                 <button type="button" class="-m-1.5 flex items-center p-1.5" @click="open = !open">

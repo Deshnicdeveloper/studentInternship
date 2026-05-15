@@ -35,6 +35,7 @@ class LogbookFlagged extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
+            'title' => 'Logbook Requires Revision',
             'type' => 'logbook_flagged',
             'message' => 'Your logbook entry for Week ' . $this->logbook->week_number . ' has been flagged for revision.',
             'logbook_id' => $this->logbook->id,

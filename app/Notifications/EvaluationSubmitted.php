@@ -37,6 +37,7 @@ class EvaluationSubmitted extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
+            'title' => ucfirst($this->evaluation->type) . ' Evaluation Submitted',
             'type' => 'evaluation_submitted',
             'message' => ucfirst($this->evaluation->type) . ' evaluation submitted for ' . $this->evaluation->placement->student->name,
             'evaluation_id' => $this->evaluation->id,

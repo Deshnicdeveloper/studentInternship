@@ -36,6 +36,7 @@ class ApplicationApproved extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
+            'title' => 'Application Approved',
             'type' => 'application_approved',
             'message' => 'Your application for ' . $this->application->internship->title . ' at ' . $this->application->internship->company->name . ' has been approved!',
             'application_id' => $this->application->id,

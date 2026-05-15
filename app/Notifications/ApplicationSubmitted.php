@@ -37,6 +37,7 @@ class ApplicationSubmitted extends Notification implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
+            'title' => 'New Application Submitted',
             'type' => 'application_submitted',
             'application_id' => $this->application->id,
             'student_name' => $this->application->student->name,
