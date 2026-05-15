@@ -30,9 +30,8 @@ class InternshipController extends Controller
             $query->where('company_id', $request->company);
         }
 
-        if ($request->filled('type')) {
-            $query->where('type', $request->type);
-        }
+
+
 
         $internships = $query->latest()->paginate(12)->withQueryString();
 

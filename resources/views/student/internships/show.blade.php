@@ -106,7 +106,7 @@
                                 <h3 class="mt-3 text-lg font-medium text-gray-900">Active Application Exists</h3>
                                 <p class="mt-1 text-sm text-gray-500">You already have a pending or approved application. Please wait for it to be processed.</p>
                             </div>
-                        @elseif($internship->application_deadline->isPast())
+                        @elseif($internship->end_date->isPast())
                             <div class="text-center">
                                 <div class="h-12 w-12 mx-auto rounded-full bg-red-100 flex items-center justify-center">
                                     <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -139,39 +139,15 @@
                     <div class="px-4 py-5 sm:p-6">
                         <dl class="space-y-4">
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Type</dt>
-                                <dd class="mt-1">
-                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {{ $internship->type === 'full-time' ? 'bg-green-100 text-green-800' : ($internship->type === 'part-time' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800') }}">
-                                        {{ ucfirst($internship->type) }}
-                                    </span>
-                                </dd>
-                            </div>
-                            @if($internship->location)
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">Location</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ $internship->location }}</dd>
-                                </div>
-                            @endif
-                            <div>
-                                <dt class="text-sm font-medium text-gray-500">Duration</dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $internship->duration }} weeks</dd>
+                                <dt class="text-sm font-medium text-gray-500">Available Slots</dt>
+                                <dd class="mt-1 text-sm text-gray-900">{{ $internship->available_slots }} / {{ $internship->slots }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500">Positions Available</dt>
-                                <dd class="mt-1 text-sm text-gray-900">{{ $internship->positions }}</dd>
-                            </div>
-                            @if($internship->stipend)
-                                <div>
-                                    <dt class="text-sm font-medium text-gray-500">Stipend</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">${{ number_format($internship->stipend) }}/month</dd>
-                                </div>
-                            @endif
-                            <div>
-                                <dt class="text-sm font-medium text-gray-500">Application Deadline</dt>
-                                <dd class="mt-1 text-sm {{ $internship->application_deadline->isPast() ? 'text-red-600' : 'text-gray-900' }}">
-                                    {{ $internship->application_deadline->format('F d, Y') }}
-                                    @if(!$internship->application_deadline->isPast())
-                                        <span class="text-gray-500">({{ $internship->application_deadline->diffForHumans() }})</span>
+                                <dt class="text-sm font-medium text-gray-500">End Date</dt>
+                                <dd class="mt-1 text-sm {{ $internship->end_date->isPast() ? 'text-red-600' : 'text-gray-900' }}">
+                                    {{ $internship->end_date->format('F d, Y') }}
+                                    @if(!$internship->end_date->isPast())
+                                        <span class="text-gray-500">({{ $internship->end_date->diffForHumans() }})</span>
                                     @endif
                                 </dd>
                             </div>
