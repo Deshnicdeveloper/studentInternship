@@ -60,11 +60,35 @@ Route::middleware(['auth', 'role:supervisor'])->prefix('supervisor')->name('supe
     })->name('dashboard');
 });
 
-// Student Routes (placeholder)
+// Student Routes
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Student\DashboardController::class, 'index'])->name('dashboard');
+
+    // Internships
+    Route::get('/internships', [App\Http\Controllers\Student\InternshipController::class, 'index'])->name('internships.index');
+    Route::get('/internships/{internship}', [App\Http\Controllers\Student\InternshipController::class, 'show'])->name('internships.show');
+    Route::post('/internships/{internship}/apply', [App\Http\Controllers\Student\InternshipController::class, 'apply'])->name('internships.apply');
+
+    // Application
+    Route::get('/application', [App\Http\Controllers\Student\ApplicationController::class, 'index'])->name('application');
+    Route::delete('/application/withdraw', [App\Http\Controllers\Student\ApplicationController::class, 'withdraw'])->name('application.withdraw');
+
+    // Logbook
+    Route::resource('logbook', App\Http\Controllers\Student\LogbookController::class)->except(['destroy']);
+
+    // Evaluations
+    Route::get('/evaluations', [App\Http\Controllers\Student\EvaluationController::class, 'index'])->name('evaluations.index');
+    Route::get('/evaluations/{evaluation}', [App\Http\Controllers\Student\EvaluationController::class, 'show'])->name('evaluations.show');
+
+    // Documents
+    Route::get('/documents', [App\Http\Controllers\Student\DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents', [App\Http\Controllers\Student\DocumentController::class, 'store'])->name('documents.store');
+    Route::get('/documents/{document}/download', [App\Http\Controllers\Student\DocumentController::class, 'download'])->name('documents.download');
+    Route::delete('/documents/{document}', [App\Http\Controllers\Student\DocumentController::class, 'destroy'])->name('documents.destroy');
+
+    // Profile
+    Route::get('/profile', [App\Http\Controllers\Student\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [App\Http\Controllers\Student\ProfileController::class, 'update'])->name('profile.update');
 });
 
 require __DIR__.'/auth.php';

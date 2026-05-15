@@ -13,18 +13,22 @@ class Logbook extends Model
     protected $fillable = [
         'placement_id',
         'student_id',
-        'date',
+        'week_number',
+        'week_start',
+        'week_end',
         'activities',
         'learnings',
         'challenges',
+        'next_week_plan',
         'status',
-        'supervisor_remarks',
+        'supervisor_feedback',
     ];
 
     protected function casts(): array
     {
         return [
-            'date' => 'date',
+            'week_start' => 'date',
+            'week_end' => 'date',
         ];
     }
 
